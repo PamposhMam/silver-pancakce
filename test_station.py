@@ -3,7 +3,8 @@
 # SPDX-License-Identifier: MIT
 """Unit test for the station module"""
 
-from floodsystem.station import MonitoringStation
+from floodsystem.station import MonitoringStation, inconsistent_typical_range_stations
+from floodsystem.stationdata import build_station_list
 
 
 def test_create_monitoring_station():
@@ -25,3 +26,35 @@ def test_create_monitoring_station():
     assert s.typical_range == trange
     assert s.river == river
     assert s.town == town
+
+    return s
+
+def test_typical_range_consistent():
+    """1F (part 1): test method that determines consistency of high/low range data of a station"""
+
+    testStation = test_create_monitoring_station()
+    
+    # normal range should return true
+    assert MonitoringStation.typical_range_consistent(testStation) == True
+
+    # lower range higher than upper range should return False
+    testStation.typical_range = (5, 3)
+    assert MonitoringStation.typical_range_consistent(testStation) == False
+
+    # none should return false
+    testStation.typical_range = None
+    assert MonitoringStation.typical_range_consistent(testStation) == False
+
+def test_inconsistent_typical_range_stations():
+    """1F (Part 2): test function that returns list of stations with inconsistent data"""
+
+    stations = build_station_list()
+
+    inconsistentStations = inconsistent_typical_range_stations(stations)
+
+    # prevent index out of range error of there are no inconsistent stations
+    if inconsistentStations:
+
+        # test if stations on the list actually have inconsisdent data
+        assert MonitoringStation.typical_range_consistent(inconsistentStations[0]) == False
+
