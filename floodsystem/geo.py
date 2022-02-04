@@ -33,9 +33,9 @@ def rivers_by_station_number(stations, N):
     for r in rivers:
         riversWithNumber.append((r, len(rivers[r])))
 
-    print(riversWithNumber)
-    riversWithNumber.sort(key = itemgetter(1))
-    print(riversWithNumber)
+    riversWithNumber.sort(key = itemgetter(1), reverse = True)
 
+    while riversWithNumber[N-1][1] == riversWithNumber[N][1]:
+        N += 1
 
-    return 
+    return riversWithNumber[:N]
