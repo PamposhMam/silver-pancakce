@@ -8,7 +8,35 @@ geographical data.
 
 from .utils import sorted_by_key  # noqa
 from operator import itemgetter
+def stations_by_distance(stations, p):
+    """This function returns a sorted list of stations a distance 'x' from a given co-ordinate, 'p'"""
+    stationname=[1]*(len(station.name)-1) 
+    from haversine import haversine, Unit
+    stationdist=[1]*(len(station.name)-1)
+    for i in range (len(station.name)-1):
+        stationdist[i]=haversine(station.coord(i), p)
+        stationname[i]=station.name(i)
+    stations=list(zip(stationname, stationdist))
+    stations.sort(key=lambda x: x[1])
+    return stations()
 
+def stations_within_radius(stations, centre, r):
+    """This function returns a list of all stations within a radius 'r' of a geographic co-ordinate 'x'"""
+    from haversine import haversine, Unit
+    inrange = []
+    for i in range (len(station.name)-1):
+        if haversine(station.coord(i), centre)<=r:
+           inrange.append[station.name]
+    return inrange
+
+def rivers_with_station(stations):
+    """This function returns a list of rivers with a monitoring station"""
+    rivers= []
+    for station in stations:
+        river=station.river
+        if river not in rivers:
+            rivers.append[river]
+    return rivers
 def stations_by_river(stations):
     """This function returns a dictionary that maps river names to a list of stations on that river"""
 
