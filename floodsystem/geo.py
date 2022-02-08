@@ -5,7 +5,7 @@
 geographical data.
 
 """
-
+!pip install haversine
 from .utils import sorted_by_key  # noqa
 from operator import itemgetter
 def stations_by_distance(stations, p):
