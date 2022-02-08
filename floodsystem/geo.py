@@ -5,7 +5,7 @@
 geographical data.
 
 """
-!pip install haversine
+#!pip install haversine
 from .utils import sorted_by_key  # noqa
 from operator import itemgetter
 def stations_by_distance(stations, p):
@@ -14,11 +14,11 @@ def stations_by_distance(stations, p):
     from haversine import haversine, Unit
     stationdist=[]
     for station in stations:
-        stationdist[]=haversine(station.coord, p)
-        stationname[]=station.name()
+        stationdist.append(haversine(station.coord, p))
+        stationname.append(station.name)
     stations=list(zip(stationname, stationdist))
     stations.sort(key=lambda x: x[1])
-    return stations()
+    return stations
 
 def stations_within_radius(stations, centre, r):
     """This function returns a list of all stations within a radius 'r' of a geographic co-ordinate 'x'"""
