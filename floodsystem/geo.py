@@ -37,6 +37,7 @@ def rivers_with_station(stations):
         if river not in rivers:
             rivers.append[river]
     return rivers
+    
 def stations_by_river(stations):
     """This function returns a dictionary that maps river names to a list of stations on that river"""
 
