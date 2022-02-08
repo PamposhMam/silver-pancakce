@@ -26,7 +26,7 @@ def stations_within_radius(stations, centre, r):
     inrange = []
     for station in stations:
         if haversine(station.coord, centre)<=r:
-           inrange.append[station.name]
+           inrange.append(station.name)
     return inrange
 
 def rivers_with_station(stations):
