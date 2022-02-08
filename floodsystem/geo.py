@@ -10,12 +10,12 @@ from .utils import sorted_by_key  # noqa
 from operator import itemgetter
 def stations_by_distance(stations, p):
     """This function returns a sorted list of stations a distance 'x' from a given co-ordinate, 'p'"""
-    stationname=[1]*(len(station.name)-1) 
+    stationname=[]
     from haversine import haversine, Unit
-    stationdist=[1]*(len(station.name)-1)
-    for i in range (len(station.name)-1):
-        stationdist[i]=haversine(station.coord(i), p)
-        stationname[i]=station.name(i)
+    stationdist=[]
+    for station in stations:
+        stationdist[]=haversine(station.coord, p)
+        stationname[]=station.name()
     stations=list(zip(stationname, stationdist))
     stations.sort(key=lambda x: x[1])
     return stations()
@@ -24,8 +24,8 @@ def stations_within_radius(stations, centre, r):
     """This function returns a list of all stations within a radius 'r' of a geographic co-ordinate 'x'"""
     from haversine import haversine, Unit
     inrange = []
-    for i in range (len(station.name)-1):
-        if haversine(station.coord(i), centre)<=r:
+    for station in stations:
+        if haversine(station.coord, centre)<=r:
            inrange.append[station.name]
     return inrange
 
