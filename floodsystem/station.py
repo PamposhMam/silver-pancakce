@@ -66,17 +66,17 @@ def inconsistent_typical_range_stations(stations):
 
     return [station for station in stations if not MonitoringStation.typical_range_consistent(station)]
 
-def relative_water_level(self):
+def relative_water_level(self, station, update_water_levels):
     #add the real code for this later
-    """This method returns a water level relative to a typical range"""
-    relativewater= {}
-    for station in stations:    
-        if self.update_water_levels== "None":
-            relativewater[relwat]= "None"
-        else:
-            relwat=self.update_water_levels/self.typical_range
-        relativewater[relwat].append(station)
+        """This method returns a water level relative to a typical range"""
+        relativewater= {}
+        for self in station:    
+            if self== "None":
+                relativewater[relwat]= "None"
+            else:
+                relwat=(update_water_levels(station)-self.typical_range[0])/(self.typical_range[1]-self.typical_range[0])
+            relativewater[relwat].append(station)
 
-        return None 
+       
     
         
