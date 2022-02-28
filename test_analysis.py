@@ -29,6 +29,11 @@ def test_polyfit():
 def test_forecast():
 
     f = np.poly1d([1, -2, 10, 4])
+    now = date2num(datetime.datetime.now())
+
+    grad, change = forecast(f, now)
 
     # gradient at x=0 should be 10
-    assert forecast(f, date2num(datetime.date.today())) == 10
+    assert round(grad) == 10
+    assert round(change) == 5
+    
