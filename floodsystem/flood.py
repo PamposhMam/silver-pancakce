@@ -3,6 +3,9 @@
 """
 
 from floodsystem.station import MonitoringStation
+from floodsystem.stationdata import update_water_levels
+
+from operator import itemgetter
 
 #it says to do this in the submodule "flood"... I can't find that
 def stations_level_over_threshold(stations, tol):
@@ -24,8 +27,17 @@ def stations_level_over_threshold(stations, tol):
 def stations_highest_rel_level(stations, N):
     """This function returns a list of N stations at which the relative water level is the highest"""
 
+    update_water_levels(stations)
+
     stations = [(station, MonitoringStation.relative_water_level(station)) for station in stations if MonitoringStation.typical_range_consistent(station)]
     stations.sort(key = itemgetter(1), reverse = True)
 
     return [s[0] for s in stations[:N]]
+
+def towns_by_rel_levels(stations):
+    """2G: For each town, determine highest relative water level of any river in that town. Sort towns into descending order of risk
+    Takes into account changes in water levels in the next 0.5 days"""
+    return
+
+
 
