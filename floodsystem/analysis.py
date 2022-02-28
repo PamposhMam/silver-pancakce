@@ -13,11 +13,17 @@ def polyfit(dates, levels, p):
     return np.poly1d(p_coeff), x[0]
 
 def forecast(poly, d0):
-    """This function predicts whether the water level at a station is rising or falling"""
-    today = date2num(datetime.date.today())
+    """This function predicts whether the water level at a station is rising or falling
+    Returns rate of change of water level, and predicted change in 0.5 days"""
+    now = date2num(datetime.datetime.now())
 
     # use gradient of polynomial to find out if water level is rising or falling
     # positive gradient = rising, negative gradient = falling
     d = poly.deriv()
-    return d(today-d0)
+    grad = d(now - d0)
+
+    # use linear extrapolation to calc change in water level
+    change = grad*0.5
+
+    return grad, change
 
