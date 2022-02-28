@@ -27,5 +27,5 @@ def stations_highest_rel_level(stations, N):
     stations = [(station, MonitoringStation.relative_water_level(station)) for station in stations if MonitoringStation.typical_range_consistent(station)]
     stations.sort(key = itemgetter(1), reverse = True)
 
-    return [s[0] for s in stations]
+    return [s[0] for s in stations[:N]]
 
