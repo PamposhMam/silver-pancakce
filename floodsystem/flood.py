@@ -1,8 +1,7 @@
 """This module contains functions related to flooding and water levels
 
 """
-
-from floodsystem.station import MonitoringStation
+from station import MonitoringStation
 from floodsystem.stationdata import update_water_levels
 
 from operator import itemgetter
@@ -14,7 +13,7 @@ def stations_level_over_threshold(stations, tol):
     statnames= {}
     statlevels= {}
     for station in stations:
-        if relative_water_level>tol:
+        if MonitoringStation.relative_water_level>tol:
             statlevel= MonitoringStation.relative_water_level 
             statlevels[statlevel].append(MonitoringStation)
     statlevel.sort(reverse=True)
