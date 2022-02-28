@@ -1,20 +1,19 @@
 """Unit test for analysis.py module"""
 
-from datetime import datetime
+import datetime
 import numpy as np
 from matplotlib.dates import date2num
-from floodsystem.analysis import polyfit
+from floodsystem.analysis import polyfit, forecast
 
 def test_polyfit():
 
-    def f(x):
-        return x**3 - 2*x**2 + 10*x + 4
-
-    dates = [datetime(2016, 12, 30), datetime(2016, 12, 31), datetime(2017, 1, 1),
-     datetime(2017, 1, 2), datetime(2017, 1, 3), datetime(2017, 1, 4),
-     datetime(2017, 1, 5)]
+    dates = [datetime.datetime(2016, 12, 30), datetime.datetime(2016, 12, 31), datetime.datetime(2017, 1, 1),
+     datetime.datetime(2017, 1, 2), datetime.datetime(2017, 1, 3), datetime.datetime(2017, 1, 4),
+     datetime.datetime(2017, 1, 5)]
 
     t = date2num(dates)
+
+    f = np.poly1d([1, -2, 10, 4])
 
     # create simple polynomial and see if function gives the same polynomial
     y = [f(n-t[0]) for n in t]
@@ -27,4 +26,9 @@ def test_polyfit():
 
     assert x0 == t[0]
 
-    
+def test_forecast():
+
+    f = np.poly1d([1, -2, 10, 4])
+
+    # gradient at x=0 should be 10
+    assert forecast(f, date2num(datetime.date.today())) == 10
