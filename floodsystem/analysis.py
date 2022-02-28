@@ -25,5 +25,5 @@ def forecast(poly, d0):
     # use linear extrapolation to calc change in water level
     change = grad*0.5
 
-    return grad, change
+    return change
 
