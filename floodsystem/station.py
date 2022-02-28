@@ -6,6 +6,10 @@ for manipulating/modifying station data
 
 """
 
+import datetime
+
+from floodsystem.datafetcher import fetch_measure_levels
+from floodsystem.analysis import polyfit, forecast
 
 class MonitoringStation:
     """This class represents a river level monitoring station"""
@@ -47,6 +51,15 @@ class MonitoringStation:
             return self.typical_range[0] <= self.typical_range[1]
         else:
             return False
+
+    def add_predicted_level_change(self):
+        """2G: This method adds the predicted_level_change attribbute to a station object"""
+
+        dates, levels = fetch_measure_levels(self.measure_id, datetime.timedelta(days=5))
+        poly, d0 = polyfit(dates, levels, 5)
+        change = forecast(poly, d0)
+
+        self.predicted_level_change = change
 
 def inconsistent_typical_range_stations(stations):
     """This function returns a list of stations that have inconsistent data"""
