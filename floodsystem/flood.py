@@ -1,7 +1,9 @@
 """This module contains functions related to flooding and water levels
 
 """
-from station import MonitoringStation
+from station import MonitoringStation 
+
+from floodsystem.station import MonitoringStation
 from floodsystem.stationdata import update_water_levels
 
 from operator import itemgetter
@@ -34,9 +36,29 @@ def stations_highest_rel_level(stations, N):
     return [s[0] for s in stations[:N]]
 
 def towns_by_rel_levels(stations):
-    """2G: For each town, determine highest relative water level of any river in that town. Sort towns into descending order of risk
-    Takes into account changes in water levels in the next 0.5 days"""
-    return
+    """2G: For each town, determine highest relative water level of any river in that town. Sort towns into descending order of risk"""
+
+    towns = {}
+
+    # create dictionary that associates each town with the highest relative water level
+    for station in stations:
+        revLevel = MonitoringStation.relative_water_level(station)
+        if station.town not in towns:
+            towns[station.town] = revLevel
+        else:
+            if revLevel > towns[station.town]:
+                towns[station.town] = revLevel
+
+    # sort dictionary by relative water levels
+    sortedTowns = []
+    sortedLevels = sorted(towns.values())
+
+    for i in range(len(sortedLevels)):
+        for k in range(len(sortedLevels)):
+            if towns[k] == sortedLevels[i]:
+                sortedTowns.append((towns.keys()[k], sortedLevels[i]))
+    
+    return sortedTowns
 
 
 
