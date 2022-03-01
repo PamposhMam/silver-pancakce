@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.dates import date2num
 
-from floodsystem.analysis import polyfit
+from .analysis import polyfit
 
 def plot_water_level_with_fit(station, dates, levels, p):
     """This function plots the water level data and best-fit polynomial with degree p of a station"""
