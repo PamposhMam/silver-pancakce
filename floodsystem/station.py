@@ -32,7 +32,6 @@ class MonitoringStation:
         self.town = town
 
         self.latest_level = None
-        self.predicted_level_change = None
 
     def __repr__(self):
         d = "Station name:     {}\n".format(self.name)
@@ -52,8 +51,8 @@ class MonitoringStation:
         else:
             return False
 
-    def add_predicted_level_change(self):
-        """2G: This method adds the predicted_level_change attribbute to a station object"""
+    def predicted_level_change(self):
+        """2G: This method returns the predicted level change attribbute of a station"""
 
         dates, levels = fetch_measure_levels(self.measure_id, datetime.timedelta(days=5))
         poly, d0 = polyfit(dates, levels, 5)
