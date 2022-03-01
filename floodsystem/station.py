@@ -54,7 +54,14 @@ class MonitoringStation:
     def predicted_level_change(self):
         """2G: This method returns the predicted level change attribbute of a station"""
 
-        dates, levels = fetch_measure_levels(self.measure_id, datetime.timedelta(days=5))
+        dates, levels = fetch_measure_levels(self.measure_id, datetime.timedelta(days=2))
+
+        if len(dates) == 0 or len(levels) == 0:
+            return 0
+
+        if len(dates) != len(levels):
+            return 0
+
         poly, d0 = polyfit(dates, levels, 5)
         change = forecast(poly, d0)
 
