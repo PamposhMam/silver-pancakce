@@ -41,6 +41,7 @@ from datetime import datetime, timedelta
 from floodsystem.stationdata import build_station_list
 station= "Cam"
 from floodsystem.datafetcher import fetch_measure_levels
+from floodsystem.station import MonitoringStation
 def plot_water_levels(station, dates, levels):
     dt= 7
     stations = build_station_list()
@@ -53,14 +54,14 @@ def plot_water_levels(station, dates, levels):
     dates, levels = fetch_measure_levels(
             station_cam.measure_id, dt=datetime.timedelta(days=dt))
     plt.plot(dates, levels)
-    plt.plot __repr__.typical_range[1]
-    plt.plot __repr__.typical_range[0]
+    plt.plot (station_name.__repr__.typical_range[1])
+    plt.plot (station_name.__repr__.typical_range[0])
 
         # Add axis labels, rotate date labels and add plot title
     plt.xlabel('date')
     plt.ylabel('water level (m)')
     plt.xticks(rotation=45);
-    plt.title('{1}, {2}'.format ("station", station_name)
+    plt.title('{1}, {2}'.format ("station", station_name))
 
         # Display plot
     plt.tight_layout()  # This makes sure plot does not cut off date labels
