@@ -15,6 +15,7 @@ def run():
     print(towns)
 
     # assign risk rating to each town
+    # there are anomolies in the relative levels (600, -16 etc. typical range 2.5 - -1.5)
 
     # factor in predicted change
 
