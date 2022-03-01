@@ -39,9 +39,18 @@ def towns_by_rel_levels(stations):
 
     # create dictionary that associates each town with the highest relative water level
     # dictionary entry looks like {town: [rel level, pred level change]}
+    # we do a predicted change only for towns with levels higher than 0.8 to save time
     for station in stations:
         revLevel = MonitoringStation.relative_water_level(station)
-        predictedChange = MonitoringStation.predicted_level_change(station)
+
+        if revLevel == None:
+            continue
+
+        if revLevel > 1.2:
+            predictedChange = MonitoringStation.predicted_level_change(station)
+        else:
+            predictedChange = 0
+
         if station.town not in towns:
             towns[station.town] = [revLevel, predictedChange]
         else:
@@ -50,12 +59,13 @@ def towns_by_rel_levels(stations):
 
     # sort dictionary by relative water levels
     sortedTowns = []
-    sortedLevels = sorted(towns.values())
+    sortedLevels = sorted(towns.values(), reverse=True)
 
     for i in range(len(sortedLevels)):
-        for k in range(len(sortedLevels)):
-            if towns[k] == sortedLevels[i]:
-                sortedTowns.append((towns.keys()[k], sortedLevels[i]))
+        for town in towns:
+            if town:
+                if towns[town][0] == sortedLevels[i][0]:
+                    sortedTowns.append((town, sortedLevels[i]))
     
     return sortedTowns
 
