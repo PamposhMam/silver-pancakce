@@ -58,14 +58,17 @@ class MonitoringStation:
         poly, d0 = polyfit(dates, levels, 5)
         change = forecast(poly, d0)
 
-        self.predicted_level_change = change
+        return change
+
+    def relative_water_level(self):
+        return (self.latest_level - self.typical_range[0])/(self.typical_range[1]-self.typical_range[0])
 
 def inconsistent_typical_range_stations(stations):
     """This function returns a list of stations that have inconsistent data"""
 
     return [station for station in stations if not MonitoringStation.typical_range_consistent(station)]
 
-def relative_water_level(self, station, update_water_levels):
+def relative_water_level1(self, station, update_water_levels):
     #add the real code for this later
         """This method returns a water level relative to a typical range"""
         relativewater= {}
