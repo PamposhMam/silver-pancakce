@@ -40,7 +40,8 @@ class MonitoringStation:
         d += "   coordinate:    {}\n".format(self.coord)
         d += "   town:          {}\n".format(self.town)
         d += "   river:         {}\n".format(self.river)
-        d += "   typical range: {}".format(self.typical_range)
+        d += "   typical range: {}\n".format(self.typical_range)
+        d += "   relative water level : {}".format(self.relative_water_level())
         return d
 
     def typical_range_consistent(self):
