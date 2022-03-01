@@ -7,21 +7,24 @@ from floodsystem.stationdata import update_water_levels
 
 import operator
 
-#it says to do this in the submodule "flood"... I can't find that
 def stations_level_over_threshold(stations, tol):
     """return a list of tuples with 1) a station (object) and 2) the station's relative water level. Note, this should only work if the level is> a given tolerance."""
     """Also sorted in descending order!"""
     statnames= []
     statlevels= []
     for station in stations:
-        g=int(MonitoringStation.relative_water_level)
+        g=MonitoringStation.relative_water_level(station)
+        if g== None:
+            g=0
+        else:
+            g=int(g)
         if g>tol:
-            statlevel= MonitoringStation.relative_water_level 
-            statlevels[statlevel].append(MonitoringStation)
+            statlevel= MonitoringStation.relative_water_level(station) 
+            statlevels.append(statlevel)
     statlevels.sort(reverse=True)
-    for station in statlevels:
+    for station in statlevel:
         statname= MonitoringStation.name
-        statnames[statname].append(MonitoringStation)
+        statnames.append(statname)
     stattuple=list(zip(statnames,statlevels))
     stattuple.sort(reverse=True)
 
