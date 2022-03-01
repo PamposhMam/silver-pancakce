@@ -46,7 +46,7 @@ def towns_by_rel_levels(stations):
         if revLevel == None:
             continue
 
-        if revLevel > 1.2:
+        if revLevel > 0.8:
             predictedChange = MonitoringStation.predicted_level_change(station)
         else:
             predictedChange = 0
