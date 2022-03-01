@@ -44,7 +44,7 @@ def towns_by_rel_levels(stations):
     # dictionary entry looks like {town: [rel level, pred level change]}
     # we do a predicted change only for towns with levels higher than 0.8 to save time
 
-    stations = stations_level_over_threshold1(stations, 0.7)
+    stations = stations_level_over_threshold1(stations, 0.8)
 
     towns = {}
 
