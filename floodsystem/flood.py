@@ -5,7 +5,7 @@
 from floodsystem.station import MonitoringStation
 from floodsystem.stationdata import update_water_levels
 
-from operator import itemgetter
+import operator
 
 #it says to do this in the submodule "flood"... I can't find that
 def stations_level_over_threshold(stations, tol):
@@ -24,22 +24,27 @@ def stations_level_over_threshold(stations, tol):
     stattuple=list(zip(statnames,statlevels))
     stattuple.sort(reverse=True)
 
+def stations_level_over_threshold1(stations, tol):
+    highRiskStations = [(station, MonitoringStation.relative_water_level(station)) for station in stations if MonitoringStation.relative_water_level(station) and MonitoringStation.relative_water_level(station) > tol]
+    highRiskStations.sort(key=operator.itemgetter(1), reverse=True)
+    return highRiskStations
+
 def stations_highest_rel_level(stations, N):
     """This function returns a list of N stations at which the relative water level is the highest"""
 
     stations = [(station, MonitoringStation.relative_water_level(station)) for station in stations if MonitoringStation.typical_range_consistent(station) and MonitoringStation.relative_water_level(station)]
-    stations.sort(key = itemgetter(1), reverse = True)
+    stations.sort(key = operator.itemgetter(1), reverse = True)
 
     return [s[0] for s in stations[:N]]
 
 def towns_by_rel_levels(stations):
     """2G: For each town, determine highest relative water level of any river in that town. Sort towns into descending order of risk"""
 
-    # input is sorted list of (station, level) tuples with a level over 0.8
-
     # create dictionary that associates each town with the highest relative water level
     # dictionary entry looks like {town: [rel level, pred level change]}
     # we do a predicted change only for towns with levels higher than 0.8 to save time
+
+    stations = stations_level_over_threshold1(stations, 0.7)
 
     towns = {}
 
@@ -49,11 +54,11 @@ def towns_by_rel_levels(stations):
 
         predictedChange = MonitoringStation.predicted_level_change(s)
 
-        if station.town not in towns:
-            towns[station.town] = [revLevel, predictedChange]
+        if s.town not in towns:
+            towns[s.town] = [revLevel, predictedChange]
         else:
-            if revLevel > towns[station.town][0]:
-                towns[station.town] = [revLevel, predictedChange]
+            if revLevel > towns[s.town][0]:
+                towns[s.town] = [revLevel, predictedChange]
 
     # sort dictionary by relative water levels - no need to sort now
     sortedTowns = []
