@@ -1,7 +1,6 @@
 """This module contains functions related to flooding and water levels
 
 """
-from station import MonitoringStation 
 
 from floodsystem.station import MonitoringStation
 from floodsystem.stationdata import update_water_levels
@@ -28,9 +27,7 @@ def stations_level_over_threshold(stations, tol):
 def stations_highest_rel_level(stations, N):
     """This function returns a list of N stations at which the relative water level is the highest"""
 
-    update_water_levels(stations)
-
-    stations = [(station, MonitoringStation.relative_water_level(station)) for station in stations if MonitoringStation.typical_range_consistent(station)]
+    stations = [(station, MonitoringStation.relative_water_level(station)) for station in stations if MonitoringStation.typical_range_consistent(station) and MonitoringStation.relative_water_level(station)]
     stations.sort(key = itemgetter(1), reverse = True)
 
     return [s[0] for s in stations[:N]]
