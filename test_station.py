@@ -63,7 +63,7 @@ def test_inconsistent_typical_range_stations():
 def create_sample_stations():
     """Creates list of 10 stations objects for testing range and water levels"""
     
-    stations = [MonitoringStation("test-s-id", "test-s-id", str(i+1), (0, 0), (random.random(), 1+random.random()), "river", "town") for i in range(10)]
+    stations = [MonitoringStation("test-s-id", "test-s-id", str(i+1), (0, 0), (0, 1), "river", "town") for i in range(10)]
     
     # stations in increasing order of water level
     for i in range(len(stations)):
