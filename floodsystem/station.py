@@ -53,7 +53,7 @@ class MonitoringStation:
             return False
 
     def predicted_level_change(self):
-        """2G: This method returns the predicted level change attribbute of a station"""
+        """2G: This method returns the predicted level change (relative to typical range) attribbute of a station"""
 
         dates, levels = fetch_measure_levels(self.measure_id, datetime.timedelta(days=2))
 
@@ -62,11 +62,13 @@ class MonitoringStation:
 
         if len(dates) != len(levels):
             return 0
+        
+        range = self.typical_range[1] - self.typical_range[0]
 
         poly, d0 = polyfit(dates, levels, 5)
         change = forecast(poly, d0)
 
-        return change
+        return change/range
 
     def relative_water_level(self):
         if self.latest_level == None or not MonitoringStation.typical_range_consistent(self):
