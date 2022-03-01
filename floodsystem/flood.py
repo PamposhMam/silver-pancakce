@@ -14,6 +14,7 @@ def stations_level_over_threshold(stations, tol):
     statnames= []
     statlevels= []
     for station in stations:
+        g=int(MonitoringStation.relative_water_level)
         if MonitoringStation.relative_water_level>tol:
             statlevel= MonitoringStation.relative_water_level 
             statlevels[statlevel].append(MonitoringStation)
