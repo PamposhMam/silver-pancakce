@@ -31,9 +31,8 @@ def test_forecast():
     f = np.poly1d([1, -2, 10, 4])
     now = date2num(datetime.datetime.now())
 
-    grad, change = forecast(f, now)
+    change = forecast(f, now)
 
-    # gradient at x=0 should be 10
-    assert round(grad) == 10
+    # gradient at x=0 should be 10, so change over 0.5 days will bbe 5
     assert round(change) == 5
     
