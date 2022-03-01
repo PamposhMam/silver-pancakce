@@ -11,8 +11,8 @@ from operator import itemgetter
 def stations_level_over_threshold(stations, tol):
     """return a list of tuples with 1) a station (object) and 2) the station's relative water level. Note, this should only work if the level is> a given tolerance."""
     """Also sorted in descending order!"""
-    statnames= {}
-    statlevels= {}
+    statnames= []
+    statlevels= []
     for station in stations:
         if MonitoringStation.relative_water_level>tol:
             statlevel= MonitoringStation.relative_water_level 
