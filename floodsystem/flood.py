@@ -97,20 +97,20 @@ def floodWarning(town):
     else:
         risk = "severe"
 
-    if change < -2:
-        phrase = "fall significantly by {} metres :D".format(str(change)[1:])
+    if change < -2.5:
+        phrase = "fall significantly"
     elif change < -1:
-        phrase = "fall by {} metres :)".format(str(change)[1:])
+        phrase = "fall moderately"
     elif change < -0.25:
-        phrase = "fall slightly by {} metres".format(str(change)[1:])
+        phrase = "fall slightly"
     elif change  < 0.25:
         phrase = "stay the same"
     elif change < 1:
-        phrase = "rise slightly by {} metres".format(str(change))
-    elif change < 2:
-        phrase = "rise by {} metres :0".format(str(change))
+        phrase = "rise slightly"
+    elif change < 2.5:
+        phrase = "rise moderately"
     else:
-        phrase = "rise significantly by {} metres :(".format(str(change))
+        phrase = "rise significantly"
 
     if predictedLevel > 1.4 and level < 1.4:
         warning = "Moderate"
