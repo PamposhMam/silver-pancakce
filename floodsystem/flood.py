@@ -35,21 +35,19 @@ def stations_highest_rel_level(stations, N):
 def towns_by_rel_levels(stations):
     """2G: For each town, determine highest relative water level of any river in that town. Sort towns into descending order of risk"""
 
-    towns = {}
+    # input is sorted list of (station, level) tuples with a level over 0.8
 
     # create dictionary that associates each town with the highest relative water level
     # dictionary entry looks like {town: [rel level, pred level change]}
     # we do a predicted change only for towns with levels higher than 0.8 to save time
+
+    towns = {}
+
     for station in stations:
-        revLevel = MonitoringStation.relative_water_level(station)
+        s = station[0]
+        revLevel = station[1]
 
-        if revLevel == None:
-            continue
-
-        if revLevel > 0.8:
-            predictedChange = MonitoringStation.predicted_level_change(station)
-        else:
-            predictedChange = 0
+        predictedChange = MonitoringStation.predicted_level_change(s)
 
         if station.town not in towns:
             towns[station.town] = [revLevel, predictedChange]
@@ -57,17 +55,20 @@ def towns_by_rel_levels(stations):
             if revLevel > towns[station.town][0]:
                 towns[station.town] = [revLevel, predictedChange]
 
-    # sort dictionary by relative water levels
+    # sort dictionary by relative water levels - no need to sort now
     sortedTowns = []
-    sortedLevels = sorted(towns.values(), reverse=True)
+    # sortedLevels = sorted(towns.values(), reverse=True)
 
-    for i in range(len(sortedLevels)):
-        for town in towns:
-            if town:
-                if towns[town][0] == sortedLevels[i][0]:
-                    sortedTowns.append((town, sortedLevels[i]))
+    # for i in range(len(sortedLevels)):
+    #     for town in towns:
+    #         if town:
+    #             if towns[town][0] == sortedLevels[i][0]:
+    #                 sortedTowns.append((town, sortedLevels[i]))
     
-    return sortedTowns
+    for town in towns:
+        sortedTowns.append([town, towns[town][0], towns[town][1]])
 
+    # return list of towns in descending order of risk [[town, rev level, predicted change]]
+    return sortedTowns
 
 
